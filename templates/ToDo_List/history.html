@@ -1,0 +1,47 @@
+  {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ToDo_List/style.css' %}">
+<head>
+  <title>History</title>
+</head>
+<div class="center">
+  <h1 style="text-align:center;">History</h1>
+</div>
+<div id="div1">
+  <form class="" action="{% url 'ToDo_List:history' %}" method="post">
+  <table id="tab1">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Date Added</th>
+        <th>Action</th>
+        <th>Due Date</th>
+        <th>Done on</th>
+        <th>Select</th>
+      </tr>
+    </thead>
+    {% if latest_action %}
+      {% for a in latest_action %}
+      <tr>
+        <td style="text-align: center;">{{a.id}}.</td>
+        <td style="text-align: center;">{{a.date}}</td>
+        <td>{{a.action}}</td>
+        <td style="text-align: center;">{{a.due}}</td>
+        <td style="text-align: center;">{{a.dDate}}</td>
+        <td style="text-align: center;">
+          {% csrf_token %}
+          <input type="checkbox" id={{a.id}} name="abc" value={{a.id}} onclick="check(this)">
+        </td>
+      </tr>
+      {% endfor %}
+    {% else %}
+      <p>No action available. <a href="#">Add some?</a></p>
+    {% endif %}
+  </table>
+  {% csrf_token %}
+  <input class="checkButt" type="submit" name="form2" value="Undo" disabled>
+  <button type="button" name="back"><a href="{% url 'ToDo_List:index'%}">Back</a></button>
+  </form>
+</div>
+
+{% load static %}
+<script type="text/javascript" src="{% static 'ToDo_List/JavaScript.js' %}"></script>
